@@ -9,8 +9,9 @@ public class Book {
     private String author;
     private int year;
     private Boolean available;
+    private int quantity;
 
-    public Book (Long id, String title, String author, int year) {
+    public Book (Long id, String title, String author, int year, int quantity) {
         if (id == null || id < 0) {
             throw new IllegalArgumentException("ID cannot be null or negative.");
         }
@@ -23,12 +24,15 @@ public class Book {
         if (year > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Year cannot be higher than current year.");
         }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        available = quantity > 0;
 
         this.id = id;
         this.title = title;
         this.author = author;
         this.year = year;
-        available = true;
 
     }
 
@@ -64,5 +68,30 @@ public class Book {
         else {
             throw new IllegalArgumentException("Book is already available.");
         }
+    }
+
+    public void addBooks(int quantity) {
+        if (quantity > 0) {
+            this.quantity -= quantity;
+        }
+        else {
+            throw new IllegalArgumentException("To add a book quantity should be at least one.");
+        }
+    }
+
+    public void removeBooks(int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("To remove books quantity should be positive.");
+        }
+        else if (quantity < this.quantity) {
+            throw new IllegalArgumentException("You cannot remove more books than exists.");
+        }
+        else if (quantity > 0 && quantity > this.quantity) {
+            this.quantity -= quantity;
+        }
+        else {
+            throw new IllegalArgumentException("Unexpected error.");
+        }
+
     }
 }
