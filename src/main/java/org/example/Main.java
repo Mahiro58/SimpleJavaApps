@@ -1,11 +1,15 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static void main() {
         boolean isOn = true;
         Scanner input = new Scanner(System.in);
+        List<Book> bookList = new ArrayList<>();
+
         while (isOn) {
             System.out.flush();
             System.out.println("Library");
